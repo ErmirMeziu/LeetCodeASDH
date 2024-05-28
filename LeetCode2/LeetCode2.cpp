@@ -159,39 +159,47 @@ public:
         return k;
     }
     //7
+    // Time: O(nlogn) ->due to the sorting operation
+    // Space: O(n) ->because we are using a map to store the indices of the sorted elements.
     vector<int> smallerNumbersThanCurrent(vector<int>& nums)
     {
-        int size = nums.size();
-        vector<int> result;
-        for (int i = 0; i < size;i++)
-        {
-            int count = 0;
-            for (int j = 0; j < size;j++)
-            {
-                if (j != i && nums[j] < nums[i])
-                {
-                    count++;
-                }
+        int length = nums.size();
+        map <int, int> mp;
+        vector <int> sorted = nums;
+        sort(sorted.begin(), sorted.end());
 
-            }
-            result.push_back(count);
+        for(int i = length - 1; i >= 0; i--){
+            mp[sorted[i]] = i;
         }
-        return result;
+        for(int i = 0; i < length; i++){
+
+            nums[i] = mp[nums[i]];
+        }
+
+        return nums;
     }
-    //8
-    // Time: O(n) -> because we iterate through each element of nums exactly once.
-    // Space: O(n) 
-    int countKDifference(vector<int>& nums, int k) {
-        int n = nums.size();
-        map<int, int> mp;
-        int count = 0;
-        // |x - y| = k => y = x + k or y = x - k
 
-        for (auto x : nums) {
-            count += mp[x + k] + mp[x - k]; // If y1 and/or y2 is present, they can form a pair with x
-            mp[x]++;
+    //8
+    // Time: O(n) -> because we iterate through the string once.
+    // Space: O(n) 
+      char repeatedCharacter(string s)
+    {
+        map<char, int> m;
+
+        for (int i = 0; i < s.size(); i++)
+        {
+
+            if (m.count(s[i]))
+            {
+                return s[i];
+            }
+            else
+            {
+                m[s[i]] = i;
+            }
         }
-        return count;
+
+        return ' ';
     }
 
     //9
@@ -538,7 +546,7 @@ int main()
     cout << "5. Palindrome Linked List. " << endl;
     cout << "6. Number of Good Pairs. " << endl;
     cout << "7. How many Numbers are Smaller than the Current Number. " << endl;
-    cout << "8. Count Number of Pairs with Absolute Difference K. " << endl;
+    cout << "8. First Letter to Appear Twice " << endl;
     cout << "9. Jewels and Stones. " << endl;
     cout << "10. Permutation Difference Between two Strings." << endl;
     cout << "11. Range Sum of BST. " << endl;
@@ -901,24 +909,19 @@ int main()
     }
     case(8):
     {
-        cout << "Given an integer array nums and an integer k, return the number of pairs (i, j)" <<
-            "where i < j such that | nums[i] - nums[j]| == k." << endl;
-        int elements;
-        cout << "Enter the number of members in the vector: ";
-        cin >> elements;
-        vector<int>nums;
-        for (int i = 0; i < elements; i++)
-        {
-            int number;
-            cout << "Element [" << i + 1 << "]: ";
-            cin >> number;
-            nums.push_back(number);
-        }
-        int k;
-        cout << "Enter a K-Difference: ";
-        cin >> k;
-        int count = s.countKDifference(nums, k);
-        cout << "There are " << count << " pairs with an absolute difference of " << k << endl;
+         string input;
+    cout << "Enter a string: ";
+    cin >> input;  // Input a string using cin
+
+    char result = repeatedCharacter(input); // Call the function to find the repeated character
+    if (result != ' ') 
+    {
+        cout << "First repeated character: " << result << endl;  // Print the result
+    } 
+    else 
+    {
+        cout << "No repeated character found." << endl;
+    }
 
         bool rep = repeat();
         if (rep)
